@@ -69,7 +69,7 @@ def log_confusion_matrix(cm, labels):
 
 def main(args):
     ws = run.experiment.workspace
-    model_list = Model.list(ws, name = args.model_name)
+    model_list = Model.list(ws, name = "mlops-template-master")
     latest_model = sorted(model_list, reverse=True, key = lambda x: x.created_time)[0]
 
     latest_model_id = latest_model.id

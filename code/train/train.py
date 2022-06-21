@@ -85,12 +85,13 @@ def main(args):
     latest_model_run_id = latest_model.tags.get("run_id")
     print('Latest model run id: ', latest_model_run_id)
 
-    latest_model_run = Run(run.experiment, run_id = latest_model_run_id)
-
-    latest_model_accuracy = latest_model_run.get_metrics().get("Accuracy")
-    print('Latest model accuracy: ', latest_model_accuracy)
-
-
+    if latest_model_run_id is not None:
+        latest_model_run = Run(Run.experiment, run_id = latest_model_run_id)
+        latest_model_accuracy = latest_model_run.get_metrics().get("Accuracy")
+        print('Latest model accuracy: ', latest_model_accuracy)
+    else:
+        latest_model_accuracy = 0
+        
     # create the outputs folder
     os.makedirs('outputs', exist_ok=True)
     
@@ -118,7 +119,7 @@ def main(args):
     print("latest model accuracy and current model accuracy",latest_model_accuracy, accuracy)
 
     # Compare model accuracy with latest and current build model
-    if latest_model_accuracy > accuracy:
+    if latest_model_accuracy < accuracy:
         deploy_model = True
         print('Current model performs better and will be deployed!')
     else:

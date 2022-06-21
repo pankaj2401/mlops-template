@@ -3,8 +3,7 @@ script: train.py
 # The arguments to the script file.
 arguments: [
   "--kernel", "linear",
-  "--penalty", 1.0,
-  "--model_name","mlops-template-master"
+  "--penalty", 1.0
 ]
 # The name of the compute target to use for this run.
 target: githubcluster

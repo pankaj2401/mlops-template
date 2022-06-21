@@ -12,6 +12,7 @@ from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_
 from sklearn.model_selection import train_test_split
 
 from azureml.core import Dataset, Run
+from azureml.core.model import Model
 run = Run.get_context()
 
 
@@ -67,6 +68,29 @@ def log_confusion_matrix(cm, labels):
 
 
 def main(args):
+    ws = run.experiment.workspace
+    model_list = Model.list(ws, name = args.model_name)
+    latest_model = sorted(model_list, reverse=True, key = lambda x: x.created_time)[0]
+
+    latest_model_id = latest_model.id
+    latest_model_name = latest_model.name
+    latest_model_version = latest_model.version
+    latest_model_path = latest_model.get_model_path(latest_model_name, _workspace=ws)
+
+    print('Latest model id: ', latest_model_id)
+    print('Latest model name: ', latest_model_name)
+    print('Latest model version: ', latest_model_version)
+    print('Latest model path: ', latest_model_path)
+
+    latest_model_run_id = latest_model.tags.get("run_id")
+    print('Latest model run id: ', latest_model_run_id)
+
+    latest_model_run = Run(run.experiment, run_id = latest_model_run_id)
+
+    latest_model_accuracy = latest_model_run.get_metrics().get("Accuracy")
+    print('Latest model accuracy: ', latest_model_accuracy)
+
+
     # create the outputs folder
     os.makedirs('outputs', exist_ok=True)
     
@@ -86,11 +110,21 @@ def main(args):
     svm_model = SVC(kernel=args.kernel, C=args.penalty, gamma='scale').fit(data['train']['X'], data['train']['y'])
     svm_predictions = svm_model.predict(data['test']['X'])
 
+    deploy_model = False
     # accuracy for X_test
     accuracy = svm_model.score(data['test']['X'], data['test']['y'])
     print('Accuracy of SVM classifier on test set: {:.2f}'.format(accuracy))
     run.log('Accuracy', float(accuracy))
-    
+    print("latest model accuracy and current model accuracy",latest_model_accuracy, accuracy)
+
+    # Compare model accuracy with latest and current build model
+    if latest_model_accuracy > accuracy:
+        deploy_model = True
+        print('Current model performs better and will be deployed!')
+    else:
+        print('Current model does NOT perform better and thus will NOT be deployed!')
+
+
     # precision for X_test
     precision = precision_score(svm_predictions, data["test"]["y"], average='weighted')
     print('Precision of SVM classifier on test set: {:.2f}'.format(precision))
@@ -112,6 +146,11 @@ def main(args):
     cm = confusion_matrix(y_true=y_test, y_pred=svm_predictions, labels=labels_numbers)
     log_confusion_matrix(cm, labels)
     
+    if deploy_model == False:
+        print('Model did not meet the accuracy criteria and will not be deployed!')
+        print('Exiting')
+        sys.exit(0)
+
     # files saved in the "outputs" folder are automatically uploaded into run history
     model_file_name = "model.pkl"
     joblib.dump(svm_model, os.path.join('outputs', model_file_name))

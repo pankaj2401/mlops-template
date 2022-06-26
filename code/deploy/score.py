@@ -2,6 +2,7 @@ import os
 import joblib
 import numpy as np
 import argparse
+from datetime import datetime
 
 from sklearn.svm import SVC
 from azureml.core import Model
@@ -36,6 +37,7 @@ def init():
 @output_schema(StandardPythonParameterType({'predict': [['Iris-virginica']]}))
 def run(data):
     # Use the model object loaded by init().
+    print(datetime.now())
     result = model.predict(data)
     inputs_dc.collect(data) #this call is saving our input data into Azure Blob
     prediction_dc.collect(result) #this call is saving our input data into Azure Blob

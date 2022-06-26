@@ -57,4 +57,4 @@ jobs:
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
           model_name:  ${{ steps.aml_registermodel.outputs.model_name }}
           model_version: ${{ steps.aml_registermodel.outputs.model_version }}
-          parameters_file: "code/deploy/deploy.json"
+          parameters_file: "deploy.json"

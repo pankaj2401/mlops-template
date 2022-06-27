@@ -7,7 +7,7 @@ print("Total arguments passed:", n)
 # Arguments passed
 print("\nName of Python script:", sys.argv[0])
 
-
+# Comment 1
 # Print arguments
 print("\nArguments passed:", end = " ")
 for i in range(1, n):

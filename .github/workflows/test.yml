@@ -12,7 +12,6 @@ jobs:
   train:
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
-    environment: development
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: Check Out Repository

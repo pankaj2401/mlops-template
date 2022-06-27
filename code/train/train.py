@@ -119,7 +119,7 @@ def main(args):
     print("latest model accuracy and current model accuracy",latest_model_accuracy, accuracy)
 
     # Compare model accuracy with latest and current build model
-    if latest_model_accuracy < accuracy:
+    if latest_model_accuracy <= accuracy:
         deploy_model = True
         print('Current model performs better and will be deployed!')
     else:

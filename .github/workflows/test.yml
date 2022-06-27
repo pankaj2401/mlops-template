@@ -21,9 +21,6 @@ jobs:
     
     - name: Test Command Line
       run: echo "Inside Step 2"
-    
-    - name: check contents of file
-      run: cat code/train/registermodel.json
       
     - name: run python script
       run: python code/train/sample.py "newrunidadsf008089a7s"

@@ -39,7 +39,12 @@ jobs:
       uses: Azure/aml-run@v1
       with:
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          parameters_file: "run.json"
+          
+    - name: Update RunId in Model Parameters file
+      run: python code/train/update_model_params.py ${{ steps.aml_run.outputs.run_id }}
+      
+    - name: Check updated contents of model parameters file
+      run: cat code/train/registermodel.json
 
     # Register model in Azure Machine Learning model registry
     - name: Register model
@@ -50,6 +55,7 @@ jobs:
           run_id:  ${{ steps.aml_run.outputs.run_id }}
           experiment_name: ${{ steps.aml_run.outputs.experiment_name }}
           model_tags: ${{ steps.aml_run.outputs.run_metrics }}
+          parameters_file: "../../code/train/registermodel.json"
 
     # Deploy model in Azure Machine Learning to ACI
     - name: Deploy model

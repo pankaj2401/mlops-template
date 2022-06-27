@@ -86,7 +86,7 @@ def main(args):
     print('Latest model run id: ', latest_model_run_id)
 
     if latest_model_run_id is not None:
-        latest_model_run = Run(Run.experiment, run_id = latest_model_run_id)
+        latest_model_run = Run(run.experiment, run_id = latest_model_run_id)
         latest_model_accuracy = latest_model_run.get_metrics().get("Accuracy")
         print('Latest model accuracy: ', latest_model_accuracy)
     else:

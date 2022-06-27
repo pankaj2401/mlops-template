@@ -22,11 +22,12 @@ jobs:
     - name: Test Command Line
       run: echo "Inside Step 2"
     
-    - name: Present working directory
-      run: pwd
+    - name: check contents of file
+      run: cat code/train/sample.py
       
-    - name: List files in the directory
-      run: ls
+    - name: run python script
+      run: python code/train/sample.py "newrunidadsf008089a7s"
       
-    - name: List files in the directory
-      run: dir
+    - name: check contents of file
+      run: cat code/train/registermodel.json
+      

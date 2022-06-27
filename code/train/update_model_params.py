@@ -18,7 +18,7 @@ register_model_file.close()
 
 # Add run id to the tags
 model_json_object["model_tags"]["run_id"] = str(sys.argv[1])
-model_json_object["model_tags"]["metric"] = str(sys.argv[2])
+model_json_object["model_tags"]["metric"] = dict(sys.argv[2])
 register_model_file = open("code/train/registermodel.json", "w")
 json.dump(model_json_object, register_model_file)
 register_model_file.close()

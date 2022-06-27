@@ -6,7 +6,7 @@ print("Total arguments passed:", n)
  
 # Arguments passed
 print("\nName of Python script:", sys.argv[0])
-print("\metric : ", type(sys.argv[2]), sys.argv[2])
+print("\metric : ", type(sys.argv[2]), json.loads(sys.argv[2])['Accuracy'])
 
  
 print("\nArguments passed:", end = " ")
@@ -20,7 +20,7 @@ register_model_file.close()
 
 # Add run id to the tags
 model_json_object["model_tags"]["run_id"] = str(sys.argv[1])
-model_json_object["model_tags"]["metric"] = str(sys.argv[2])
+model_json_object["model_tags"]["metric"] = json.loads(sys.argv[2])['Accuracy']
 register_model_file = open("code/train/registermodel.json", "w")
 json.dump(model_json_object, register_model_file)
 register_model_file.close()

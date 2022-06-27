@@ -14,7 +14,7 @@ for i in range(1, n):
 myjson = {
   "model_file_name": "model.pkl",
   "tags":{
-     "run_id":sys.argv[1]
+     "run_id":str(sys.argv[1])
   }
 }
 

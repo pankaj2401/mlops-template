@@ -39,6 +39,7 @@ jobs:
       uses: Azure/aml-run@v1
       with:
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          parameters_file: "run.json"
 
     # Register model in Azure Machine Learning model registry
     - name: Register model

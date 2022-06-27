@@ -2,6 +2,7 @@
   "model_file_name": "model.pkl"
   ,"model_name":"mlops-template-master"
   ,"model_tags":{
-      "run_id":"__run_id__"
+      "run_id":"__run_id__",
+      "model_tags":"__metric__"
   }
 }

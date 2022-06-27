@@ -12,7 +12,7 @@ jobs:
   train:
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
-    environment: development
+    # environment: development
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: Check Out Repository
@@ -39,6 +39,7 @@ jobs:
       uses: Azure/aml-run@v1
       with:
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          parameters_file: "run.json"
 
     - name: Update RunId in Model Parameters file
       run: python code/train/update_model_params.py ${{ steps.aml_run.outputs.run_id }}

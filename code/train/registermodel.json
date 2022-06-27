@@ -1,6 +1,6 @@
 {
   "model_file_name": "model.pkl"
-  ,"model_name":"iris_model"
+  ,"model_name":"mlops-template-master"
   ,"model_tags":{
       "run_id":"__run_id__"
   }

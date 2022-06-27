@@ -19,5 +19,5 @@ myjson = {
 }
 
 
-with open('registermodel.json', 'w') as fp:
+with open('code/train/registermodel.json', 'w') as fp:
     json.dump(myjson, fp, sort_keys=True, indent=4)

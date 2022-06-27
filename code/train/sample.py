@@ -17,4 +17,7 @@ myjson = {
      "run_id":sys.argv[1]
   }
 }
-json.dumps(myjson,"registermodel.json")
+
+
+with open('registermodel.json', 'w') as fp:
+    json.dump(dict, fp, sort_keys=True, indent=4)

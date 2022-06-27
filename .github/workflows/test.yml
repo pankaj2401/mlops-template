@@ -1,0 +1,24 @@
+# Actions train a model on Azure Machine Learning
+name: aml-train-deploy-workflow
+
+on: workflow_dispatch
+  #push:
+    #branches:
+    #  - master
+    # paths:
+    #   - 'code/*'
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    environment: development
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Check Out Repository
+      id: checkout_repository
+      uses: actions/checkout@v2
+        
+    
+    - name: Test Command Line
+      run: echo "Inside Step 2"

@@ -20,4 +20,4 @@ myjson = {
 
 
 with open('registermodel.json', 'w') as fp:
-    json.dump(dict, fp, sort_keys=True, indent=4)
+    json.dump(myjson, fp, sort_keys=True, indent=4)
